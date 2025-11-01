@@ -4,7 +4,6 @@
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <semaphore.h>
-#include <errno.h> 
 #include <stdio.h>
 
 #define MAX_LINE_LENGTH 1024
@@ -21,9 +20,6 @@ void write_string(int fd, const char *str) {
     write(fd, str, strlen(str));
 }
 
-void print_error(const char *msg) {
-    printf("%s: errno = %d (%s)\n", msg, errno, strerror(errno));
-}
 
 
 void reverse_string(char *str) {
@@ -62,7 +58,6 @@ int main(int argc, char *argv[]) {
 
     int shm_fd = shm_open(shm_name, O_RDWR, 0666);
     if (shm_fd == -1) {
-        print_error("shm_open failed");
         const char msg[] = "error: shm_open failed\n";
         write(STDERR_FILENO, msg, sizeof(msg) - 1);
         close(file_fd);
