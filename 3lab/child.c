@@ -20,8 +20,6 @@ void write_string(int fd, const char *str) {
     write(fd, str, strlen(str));
 }
 
-
-
 void reverse_string(char *str) {
     int len = strlen(str);
     for (int i = 0; i < len / 2; i++) {
@@ -62,8 +60,6 @@ int main(int argc, char *argv[]) {
         write(STDERR_FILENO, msg, sizeof(msg) - 1);
         close(file_fd);
         exit(EXIT_FAILURE);
-
-        return 1;
     }
     
     shared_data_t *shared_data = mmap(NULL, sizeof(shared_data_t) * MAX_CHILDREN, 
@@ -74,8 +70,6 @@ int main(int argc, char *argv[]) {
         close(file_fd);
         shm_unlink(shm_name);
         exit(EXIT_FAILURE);
-        
-        return 1;
     }
     
     sem_t *semaphore = sem_open(sem_name, O_RDWR);
@@ -86,7 +80,6 @@ int main(int argc, char *argv[]) {
         munmap(shared_data, sizeof(shared_data_t) * MAX_CHILDREN);
         shm_unlink(shm_name);
         exit(EXIT_FAILURE);
-
     }
     
     char line[MAX_LINE_LENGTH];
@@ -137,10 +130,15 @@ int main(int argc, char *argv[]) {
             
             reverse_string(line);
             
-            write_string(STDOUT_FILENO, child_name);
-            write_string(STDOUT_FILENO, ": ");
+            // Исправленный вывод
+            write_string(STDOUT_FILENO, "string ");
+            char index_str[2];
+            index_str[0] = '1' + child_index;  // "1" или "2"
+            index_str[1] = '\0';
+            write_string(STDOUT_FILENO, index_str);
+            write_string(STDOUT_FILENO, ": \"");
             write_string(STDOUT_FILENO, line);
-            write_string(STDOUT_FILENO, "\n");
+            write_string(STDOUT_FILENO, "\"\n");
             
             write_string(file_fd, line);
             write_string(file_fd, "\n");

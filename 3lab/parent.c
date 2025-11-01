@@ -137,7 +137,6 @@ int main() {
     }
     
     if (pid2 == 0) {
-        // Дочерний процесс 2
         char shm_name_child[64];
         char sem_name_child[64];
         snprintf(shm_name_child, sizeof(shm_name_child), "/lab_shm_%d", main_pid);
@@ -179,8 +178,6 @@ int main() {
         *num_ptr = '\0';
         
         strcat(prompt, num_str);
-        strcat(prompt, ": ");
-        write_string(STDOUT_FILENO, prompt);
         
         bytes = read(STDIN_FILENO, line, MAX_LINE_LENGTH);
         if (bytes <= 0) {
@@ -211,7 +208,6 @@ int main() {
         
         line_count++;
         
-        usleep(100000);
     }
     
     sem_wait(semaphore);
