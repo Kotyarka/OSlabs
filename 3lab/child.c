@@ -130,10 +130,9 @@ int main(int argc, char *argv[]) {
             
             reverse_string(line);
             
-            // Исправленный вывод
             write_string(STDOUT_FILENO, "string ");
             char index_str[2];
-            index_str[0] = '1' + child_index;  // "1" или "2"
+            index_str[0] = '1' + child_index; 
             index_str[1] = '\0';
             write_string(STDOUT_FILENO, index_str);
             write_string(STDOUT_FILENO, ": \"");
