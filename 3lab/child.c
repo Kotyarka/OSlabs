@@ -150,7 +150,6 @@ int main(int argc, char *argv[]) {
             sem_post(semaphore);
         }
         
-        usleep(50000);
     }
     
     close(file_fd);

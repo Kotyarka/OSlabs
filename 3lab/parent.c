@@ -148,7 +148,6 @@ int main() {
         exit(EXIT_FAILURE);
     }
     
-    sleep(1);
     
     char line[MAX_LINE_LENGTH];
     int line_count = 1;
